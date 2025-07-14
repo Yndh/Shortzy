@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import { authOptions } from "@/lib/authOptions";
 
 interface ResponseInterface<T = any> extends NextApiResponse<T> {
   params: {
@@ -10,7 +11,7 @@ interface ResponseInterface<T = any> extends NextApiResponse<T> {
 }
 
 export async function mDELETE(req: Request, res: ResponseInterface) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
     return new NextResponse(
